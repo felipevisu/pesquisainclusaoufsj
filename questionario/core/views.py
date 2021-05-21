@@ -1,3 +1,4 @@
+from django.db import reset_queries
 from questionario.core.forms import SendForm
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import redirect
@@ -24,20 +25,8 @@ class FinalizedView(TemplateView):
     template_name = "finalized.html"
 
     def get_response(self):
-        session_key = self.request.session.session_key
-        session = Session.objects.filter(session_key=session_key).first()
-
-        if not session:
-            try:
-                del self.request.session['session_key']
-                self.request.session.modified = True
-            except:
-                pass
-            self.request.session.create()
-            session_key = self.request.session.session_key
-            session = Session.objects.filter(session_key=session_key).first()
-
-        response, _ = Response.objects.get_or_create(session=session)
+        pk = self.kwargs.get('pk')
+        response = Response.objects.get(pk=pk)
         return response
 
     def get_context_data(self, **kwargs):
@@ -56,7 +45,6 @@ class FinalizedView(TemplateView):
             group = Group.objects.last()
             return redirect(reverse_lazy('survey_form', kwargs={'pk': group.pk}))
         return super().dispatch(request, *args, **kwargs)
-
 
 
 class SurveyView(FormView):
@@ -88,7 +76,7 @@ class SurveyView(FormView):
     def dispatch(self, request, *args, **kwargs):
         response = self.get_response()
         if response.finalized:
-            return redirect(reverse_lazy('finalized'))
+            return redirect(reverse_lazy('finalized', kwargs={"pk": response.pk}))
         group = self.get_group()
         prev = Group.objects.filter(order__lt=group.order).order_by('order').last()
         if prev:
@@ -122,7 +110,6 @@ class SurveyView(FormView):
 
     def form_valid(self, form):
         form.save()
-        groups = Group.objects.all()
         group = self.get_group()
         new_group = Group.objects.filter(order__gt=group.order).order_by('order').first()
         if new_group:
@@ -131,7 +118,8 @@ class SurveyView(FormView):
         response = self.get_response()
         response.finalized = True
         response.save()
-        return redirect(reverse_lazy('finalized'))
+        response.session.delete()
+        return redirect(reverse_lazy('finalized', kwargs={'pk': response.pk}))
 
     def get_success_url(self, *args, **kwargs):
         return reverse_lazy('survey_form', kwargs={'pk': self.kwargs['pk']})

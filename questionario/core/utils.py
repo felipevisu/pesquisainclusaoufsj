@@ -11,7 +11,9 @@ def get_results(response):
         for answer in answers:
             total = total + int(answer.body)
 
-        result["total"] = round(total/questions.count(), 2)
+        total = round(total/questions.count(), 2)
+
+        result["total"] = total
         result["name"] = category.name
         result["description"] = category.description
 

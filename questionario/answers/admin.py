@@ -8,7 +8,7 @@ class AnswerInline(admin.StackedInline):
 
 
 class ResponseAdmin(admin.ModelAdmin):
-    list_display = ['session', 'creation_date']
+    list_display = ['session', 'creation_date', 'pk']
     inlines = [AnswerInline]
 
 
