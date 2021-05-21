@@ -7,9 +7,9 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
     description = models.TextField(blank=True)
-    text_1 = models.TextField(blank=True)
-    text_2 = models.TextField(blank=True)
-    text_3 = models.TextField(blank=True)
+    text_1 = models.TextField("Média >= 5", blank=True)
+    text_2 = models.TextField("2.5 < Média > 5", blank=True)
+    text_3 = models.TextField("Média <= 25", blank=True)
 
     class Meta:
         ordering = ['pk']
