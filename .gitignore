@@ -1,0 +1,14 @@
+*.pyc
+*.env
+*.map
+*.xml
+*.xls
+*.xlsx
+
+.vscode
+.pytest_cache
+__pycache__
+staticfiles
+media
+venv
+temp

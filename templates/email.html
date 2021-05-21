@@ -1,0 +1,34 @@
+<html>
+    <body>
+        <h3>MUITO OBRIGADO POR SUA CONTRIBUIÇÃO PARA ESTA PESQUISA</h3> 
+        <hr/>
+        <h4 class="mb-4">Resultados</h4>
+        {% for result in results %}
+            <div>
+                <h4>{{result.name}}</h4>
+                <p>
+                    <b>Média: {{ result.total }}</b><br/>
+                    {{ result.text }}
+                </p>
+                <p class="text-muted">
+                    <b>Para refletir: </b> {{ result.description }}
+                </p>
+            </div>
+            <hr/>
+        {% endfor %}
+        <h3>Curiosidades</h3>
+        <p>
+            Você sabia que o preconceito em relação às pessoas com deficiência é chamado de 
+            capacitismo, pois associa deficiência à incapacidade. 
+        </p>
+        <p>
+            Você sabia que um grande desafio que temos é olharmos a deficiência como uma diferença 
+            funcional? É possível ser e estar no mundo de infinitas formas. O que precisamos é 
+            garantir oportunidades para que os direitos de todos sejam respeitados: direito à vida, 
+            à educação, à saúde, ao trabalho... Nesse sentido, a causa da inclusão é de todos e de 
+            cada um de nós.
+        </p>
+        <hr/>
+        <p class="text-center">Procure saber mais sobre inclusão e compartilhe com seus colegas e gestores. Você pode ajudar a tornar nosso mundo mais inclusivo.</p>
+    </body>
+</html>

@@ -1,0 +1,69 @@
+{% load bootstrapform %}
+
+<div class="form-group">
+
+{% if field|is_checkbox %}
+    <div class="form-check">
+        {{ field }}
+        <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+    </div>
+
+{% elif field|is_multiple_checkbox %}
+    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+    {% for choice in field %}
+        <div class="form-check">
+            {% if form.is_bound %}
+                {% if field.errors %}
+                    <input id="{{ choice.data.attrs.id }}" class="form-check-input is-invalid" type="checkbox" name="{{ choice.data.name }}" value="{{ choice.data.value }}" {% if choice.data.selected %}checked="checked"{% endif %} />
+                {% else %}
+                    <input id="{{ choice.data.attrs.id }}" class="form-check-input" type="checkbox" name="{{ choice.data.name }}" value="{{ choice.data.value }}" {% if choice.data.selected %}checked="checked"{% endif %} />
+                {% endif %}
+            {% else %}
+                <input id="{{ choice.data.attrs.id }}" class="form-check-input" type="checkbox" name="{{ choice.data.name }}" value="{{ choice.data.value }}" {% if choice.data.selected %}checked="checked"{% endif %} />
+            {% endif %}
+            <label class="form-check-label" for="{{ choice.data.attrs.id }}">{{ choice.data.label }}</label>
+        </div>
+    {% empty %}
+        <div>
+            Nenhuma opção disponível.
+        </div>
+    {% endfor %}
+
+{% elif field|is_radio %}
+    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+    {% for choice in field %}
+        {% if choice.data.value %}
+            <div class="form-check">
+                {% if form.is_bound %}
+                    {% if field.errors %}
+                        <input id="{{ choice.data.attrs.id }}" class="form-check-input is-invalid" type="radio" name="{{ choice.data.name }}" value="{{ choice.data.value }}" {% if choice.data.selected %}checked="checked"{% endif %} />
+                    {% else %}
+                        <input id="{{ choice.data.attrs.id }}" class="form-check-input" type="radio" name="{{ choice.data.name }}" value="{{ choice.data.value }}" {% if choice.data.selected %}checked="checked"{% endif %} />
+                    {% endif %}
+                {% else %}
+                    <input id="{{ choice.data.attrs.id }}" class="form-check-input" type="radio" name="{{ choice.data.name }}" value="{{ choice.data.value }}" {% if choice.data.selected %}checked="checked"{% endif %} />
+                {% endif %}
+                <label for="{{ choice.data.attrs.id }}" class="form-check-label">{{ choice.data.label }}</label>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% elif field|is_select %}
+    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+    <div>
+        {{ field }}
+    </div>
+{% else %}
+    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+    {{ field }}
+{% endif %}
+
+{% for error in field.errors %}
+<div class="invalid-feedback d-block bg-danger rounded text-white px-2 mt-2">{{ error }}</div>
+{% endfor %}
+
+{% if field.help_text %}
+<small class="form-text">{{ field.help_text }}</small>
+{% endif %}
+
+</div>

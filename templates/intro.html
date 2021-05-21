@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container text-center pt-4">
+    <h2 class="fw-bold">INCLUSÃO DE PESSOAS COM DEFICIÊNCIA NO TRABALHO</h2>
+    <h4 class="fw-bold">Condições de trabalho, crenças e atitudes</h4>
+    <div class="border rounded p-4 bg-light mt-4">
+        <p>Para participar desta pesquisa você precisa ter mais de 18 anos e estar trabalhando (trabalho formal ou informal).</p>
+        <p>O objetivo do presente estudo é identificar os principais fatores que podem contribuir ou dificultar a inclusão de pessoas com deficiência no trabalho. A investigação faz parte de um programa de pesquisa conduzido na Universidade Federal de São João del-Rei e sob responsabilidade da Profa. Dra. Maria Nivalda de Carvalho-Freitas, em parceria com o Prof. Dr. Antônio Luiz Marques, da Universidade de Barcelona. Além disso, a pesquisa foi aprovada pelo Comitê de Ética da Universidade Federal de São João del-Rei (Plataforma Brasil CAAE 94280318.5.0000.5151).</p>
+        <p>Sua participação é anônima, logo não temos como identificar você. Caso você livremente concorde em participar da pesquisa, você deverá responder a um questionário com 141 questões de múltipla escolha. Tem também uma última questão aberta, não obrigatória. O tempo médio para responder à pesquisa é de 40 minutos. As questões são relativas ao seu contexto laboral, suas crenças e atitudes sobre a inclusão de pessoas com deficiência no trabalho.</p>
+        <p>É necessário que você responda a todas as perguntas de múltipla escolha. <b>No final, você receberá imediatamente uma análise de suas respostas referentes às suas crenças sobre a inclusão de pessoas com deficiência.</b></p>
+        <hr/>
+        <a href="{% url 'survey_form' 1 %}" class="btn btn-danger btn-lg">Aceito participar da pesquisa</a>        
+    </div>
+    
+</div>
+
+{% endblock %}

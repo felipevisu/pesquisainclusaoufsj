@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="border rounded p-4 bg-light">
+        <h2>MUITO OBRIGADO POR SUA CONTRIBUIÇÃO PARA ESTA PESQUISA</h2> 
+        <hr/>
+        <h4 class="mb-4">Resultados</h4>
+        {% for result in results %}
+            <div>
+                <h5>{{result.name}}</h5>
+                <p>
+                    <b>Média: {{ result.total }}</b><br/>
+                    {{ result.text }}
+                </p>
+                <p class="text-muted"><small>
+                    <b>Para refletir: </b> {{ result.description }}
+                </small></p>
+            </div>
+            <hr/>
+        {% endfor %}
+        <h4>Curiosidades</h4>
+        <p>
+            Você sabia que o preconceito em relação às pessoas com deficiência é chamado de 
+            capacitismo, pois associa deficiência à incapacidade. 
+        </p>
+        <p>
+            Você sabia que um grande desafio que temos é olharmos a deficiência como uma diferença 
+            funcional? É possível ser e estar no mundo de infinitas formas. O que precisamos é 
+            garantir oportunidades para que os direitos de todos sejam respeitados: direito à vida, 
+            à educação, à saúde, ao trabalho... Nesse sentido, a causa da inclusão é de todos e de 
+            cada um de nós.
+        </p>
+        <hr/>
+        <p class="text-center">Procure saber mais sobre inclusão e compartilhe com seus colegas e gestores. Você pode ajudar a tornar nosso mundo mais inclusivo.</p>
+        <hr/>
+        <p class="text-center mb-0">
+            <a href="{% url 'restart' %}" class="btn btn-outline-danger btn-lg me-xl-2">Recomeçar a pesquisa</a>
+            <a href="{% url 'send' %}" class="btn btn-danger btn-lg">Enviar resultados por email</a> 
+        </p>
+    </div>
+    
+</div>
+
+{% endblock %}

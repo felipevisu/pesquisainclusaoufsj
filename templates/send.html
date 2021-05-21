@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load bootstrapform %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="border rounded p-4 bg-light">
+        <h4>Enviar resultados por email</h4>
+        <p>Observação: seu endereço de email <b>não</b> é amarzenado no nosso sistema. Seu formulário continua anônimo.</p>
+        <hr/>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="grid">
+                <div class="col col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+                   {{ form|bootstrap }} 
+                </div>
+            </div>
+            <hr/>
+            <div class="">
+                <button type="submit" class="btn btn-lg btn-danger">Enviar</button>
+            </div>
+        </form>
+        
+    </div>
+    
+</div>
+
+{% endblock %}
