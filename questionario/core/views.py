@@ -21,32 +21,6 @@ class IntroView(TemplateView):
         return context
 
 
-class FinalizedView(TemplateView):
-    template_name = "finalized.html"
-
-    def get_response(self):
-        pk = self.kwargs.get('pk')
-        response = Response.objects.get(pk=pk)
-        return response
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        response = self.get_response()
-        results = get_results(response)
-
-        context['response'] = response
-        context["results"] = results
-
-        return context
-
-    def dispatch(self, request, *args, **kwargs):
-        response = self.get_response()
-        if not response.finalized:
-            group = Group.objects.last()
-            return redirect(reverse_lazy('survey_form', kwargs={'pk': group.pk}))
-        return super().dispatch(request, *args, **kwargs)
-
-
 class SurveyView(FormView):
     form_class = SurveyForm
     template_name = "survey.html"
@@ -137,17 +111,40 @@ class RestartView(TemplateView):
         return redirect(reverse_lazy('intro'))
 
 
+class FinalizedView(TemplateView):
+    template_name = "finalized.html"
+
+    def get_response(self):
+        pk = self.kwargs.get('pk')
+        response = Response.objects.get(pk=pk)
+        return response
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        response = self.get_response()
+        results = get_results(response)
+
+        context['response'] = response
+        context["results"] = results
+
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        response = self.get_response()
+        if not response.finalized:
+            group = Group.objects.last()
+            return redirect(reverse_lazy('survey_form', kwargs={'pk': group.pk}))
+        return super().dispatch(request, *args, **kwargs)
+
+
 class SendView(FormView):
     form_class = SendForm
     template_name = "send.html"
 
     def get_response(self):
-        session_key = self.request.session.session_key
-        session = Session.objects.filter(session_key=session_key).first()
-        if session:
-            response = Response.objects.filter(session=session).first()
-            return response
-        return None
+        pk = self.kwargs.get('pk')
+        response = Response.objects.get(pk=pk)
+        return response
 
     def form_valid(self, form):
         response = self.get_response()
@@ -158,4 +155,4 @@ class SendView(FormView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('send')
+        return reverse_lazy('send', kwargs={'pk': self.kwargs.get('pk')})
