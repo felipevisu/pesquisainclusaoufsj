@@ -5,3 +5,5 @@ urlpatterns = [
     path('', include('questionario.core.urls')),
     path('admin/', admin.site.urls),
 ]
+
+admin.site.site_header = 'Pesquisa Inclusão UFSJ'
