@@ -17,10 +17,12 @@ def get_results(response):
         result["name"] = category.name
         result["description"] = category.description
 
+        print(total)
+
         if total >= 5:
             result["text"] = category.text_1
 
-        if 2.5 > total < 5:
+        if total > 2.5 and total < 5:
             result["text"] = category.text_2
 
         if total <= 2.5:
