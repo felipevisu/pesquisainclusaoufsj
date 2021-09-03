@@ -1,13 +1,13 @@
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
-
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = '$7daca#n_n48&-)yufz1i%7n)o^lv$x4b5mn$9e9v%nm7tx93c'
+SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -61,10 +61,10 @@ WSGI_APPLICATION = 'questionario.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pesquisainclusaoufsj',
-        'USER': 'pesquisainclusaoufsj',
-        'PASSWORD': 'V@visual582',
-        'HOST': 'pgsql26-farm36.kinghost.net',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASS'),
+        'HOST': config('DATABASE_KEY'),
         'PORT': 5432
     }
 }
@@ -96,9 +96,9 @@ EMAIL_HOST = 'smtp.kinghost.net'
 
 EMAIL_PORT = 587
 
-EMAIL_HOST_USER = 'contato@pesquisainclusaoufsj.kinghost.net'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 
-EMAIL_HOST_PASSWORD = 'visual582'
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 EMAIL_USE_TLS = True
 
